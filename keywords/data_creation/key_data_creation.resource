@@ -2,11 +2,10 @@
 Library    Collections
 
 
-
-
 *** Keywords ***
 Create New User Body Data
-    [Documentation]
+    [Documentation]    This keyword creates a dictionary to be used as a body in a request
+    ...                If no name and job are passed as parameters, the dictionary will be empty
     [Arguments]    ${name}=${None}    ${job}=${None}
 
     ${body_data}    Create Dictionary
