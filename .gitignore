@@ -161,6 +161,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-log.html
-output.xml
-report.html
+# Robot Framework run evidence and pabot results
+./log.html
+./output.xml
+./report.html
+.pabotsuitenames
+pabot_results
+.DS_Store
