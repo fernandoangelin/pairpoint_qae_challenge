@@ -39,8 +39,4 @@ pabot tests
 Pabot creates workers to run each suite. For this specific case, two workers will be created to run the suite create_new_user and get_user. PS: it is installed in the previous step (while installing the libraries from the requirements.txt file)
 
 ## Run Evidence
-You can view the HTML file [here](path/to/yourfile.html).
-
-[Here](/evidence/report.html), one can see an example of Test Run Report.
-
-And [here](/evidence/log.html), one can see an example of Test Run Log.
+One can find examples of Test Run Report and Test Run Log inside the evidence folder, [here](/evidence/).
