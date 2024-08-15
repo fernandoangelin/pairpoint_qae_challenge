@@ -1,0 +1,2241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.12.3 on darwin)" generated="2024-08-15T18:10:52.366213" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="/Users/fernandoangelin/Downloads/pairpoint_qae_challenge-main/tests">
+<suite id="s1-s1" name="Users Endpoint" source="/Users/fernandoangelin/Downloads/pairpoint_qae_challenge-main/tests/users_endpoint">
+<suite id="s1-s1-s1" name="Create New User" source="/Users/fernandoangelin/Downloads/pairpoint_qae_challenge-main/tests/users_endpoint/create_new_user.robot">
+<kw name="Setup Users Endpoint URI" owner="key_users_endpoint" type="SETUP">
+<variable name="${USERS_ENDPOINT_URI}" scope="SUITE">
+<var>${BASE_URL}${USERS_ENDPOINT}</var>
+<status status="PASS" start="2024-08-15T18:10:52.495944" elapsed="0.000068"/>
+</variable>
+<doc>This keyword creates and set the URI for /users endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:52.495875" elapsed="0.000176"/>
+</kw>
+<test id="s1-s1-s1-t1" name="Create A New User Through API Full Body" line="13">
+<kw name="Create New User Body Data" owner="key_data_creation">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-08-15T18:10:52.496799" level="INFO">${body_data} = {}</msg>
+<var>${body_data}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.496697" elapsed="0.000113"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${name}&quot; != &quot;${None}&quot;">
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${body_data}</arg>
+<arg>name</arg>
+<arg>${name}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.496929" elapsed="0.000060"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.496844" elapsed="0.000161"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.496835" elapsed="0.000180"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${job}&quot; != &quot;${None}&quot;">
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${body_data}</arg>
+<arg>job</arg>
+<arg>${job}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.497101" elapsed="0.000050"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.497035" elapsed="0.000130"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.497030" elapsed="0.000144"/>
+</if>
+<return>
+<value>${body_data}</value>
+<status status="PASS" start="2024-08-15T18:10:52.497187" elapsed="0.000017"/>
+</return>
+<msg time="2024-08-15T18:10:52.497254" level="INFO">${new_user_data} = {'name': 'morpheus', 'job': 'leader'}</msg>
+<var>${new_user_data}</var>
+<arg>name=morpheus</arg>
+<arg>job=leader</arg>
+<status status="PASS" start="2024-08-15T18:10:52.496388" elapsed="0.000874"/>
+</kw>
+<kw name="Send A POST Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<kw name="POST" owner="REST">
+<arg>${uri}</arg>
+<arg>${body}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a POST request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.497509" elapsed="0.221868"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.497474" elapsed="0.222019"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>POST could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.719722" elapsed="0.000024"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.719580" elapsed="0.000196"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.497456" elapsed="0.222352"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>${new_user_data}</arg>
+<doc>This keyword sends a POST request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:52.497360" elapsed="0.222501"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.720553" level="INFO">
+201</msg>
+<msg time="2024-08-15T18:10:52.720623" level="INFO">${actual_status_code} = 201</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.720370" elapsed="0.000270"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:52.720891" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.720743" elapsed="0.000210"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.721181" level="INFO">
+"Created"</msg>
+<msg time="2024-08-15T18:10:52.721240" level="INFO">${actual_reason} = Created</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.721049" elapsed="0.000207"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.721352" elapsed="0.000151"/>
+</kw>
+<arg>expected_status_code=201</arg>
+<arg>expected_reason=Created</arg>
+<status status="PASS" start="2024-08-15T18:10:52.720074" elapsed="0.001478"/>
+</kw>
+<kw name="Validate Create New User Response Body" owner="key_users_endpoint">
+<if>
+<branch type="IF" condition="&quot;${full_body}&quot; == &quot;Yes&quot;">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.740176" level="INFO">
+"morpheus"</msg>
+<msg time="2024-08-15T18:10:52.740259" level="INFO">${actual_name} = morpheus</msg>
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.722544" elapsed="0.017732"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.752717" level="INFO">
+"leader"</msg>
+<msg time="2024-08-15T18:10:52.752804" level="INFO">${actual_job} = leader</msg>
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.740398" elapsed="0.012418"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.752930" elapsed="0.010232"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.763233" elapsed="0.009043"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.772353" elapsed="0.000394"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.772810" elapsed="0.000273"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.722345" elapsed="0.050757"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Job&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773177" elapsed="0.000008"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773229" elapsed="0.000006"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773341" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773121" elapsed="0.000240"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Name&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773410" elapsed="0.000006"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773452" elapsed="0.000006"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773493" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.773372" elapsed="0.000139"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.722325" elapsed="0.051196"/>
+</if>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_ID_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.773561" elapsed="0.008688"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_CREATEDAT_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.782321" elapsed="0.008090"/>
+</kw>
+<arg>user_data=${new_user_data}</arg>
+<arg>full_body=Yes</arg>
+<doc>This keyword validates the format and the content of the response when creating a new user</doc>
+<status status="PASS" start="2024-08-15T18:10:52.722086" elapsed="0.068366"/>
+</kw>
+<doc>This test creates a new user through the API with a full body
+Full body is with name and job
+The response should have status code 201 and the reason Created</doc>
+<tag>all-tests</tag>
+<tag>create-user</tag>
+<status status="PASS" start="2024-08-15T18:10:52.496095" elapsed="0.294455"/>
+</test>
+<test id="s1-s1-s1-t2" name="Create A New User Through API Only Name" line="24">
+<kw name="Create New User Body Data" owner="key_data_creation">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-08-15T18:10:52.791240" level="INFO">${body_data} = {}</msg>
+<var>${body_data}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.791163" elapsed="0.000089"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${name}&quot; != &quot;${None}&quot;">
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${body_data}</arg>
+<arg>name</arg>
+<arg>${name}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.791368" elapsed="0.000063"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.791283" elapsed="0.000163"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.791274" elapsed="0.000182"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${job}&quot; != &quot;${None}&quot;">
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${body_data}</arg>
+<arg>job</arg>
+<arg>${job}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.791542" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.791476" elapsed="0.000088"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.791470" elapsed="0.000102"/>
+</if>
+<return>
+<value>${body_data}</value>
+<status status="PASS" start="2024-08-15T18:10:52.791587" elapsed="0.000041"/>
+</return>
+<msg time="2024-08-15T18:10:52.791678" level="INFO">${new_user_data} = {'name': 'morpheus'}</msg>
+<var>${new_user_data}</var>
+<arg>name=morpheus</arg>
+<status status="PASS" start="2024-08-15T18:10:52.791014" elapsed="0.000672"/>
+</kw>
+<kw name="Send A POST Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<kw name="POST" owner="REST">
+<arg>${uri}</arg>
+<arg>${body}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a POST request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.791959" elapsed="0.164565"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.791919" elapsed="0.164694"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>POST could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.956862" elapsed="0.000019"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.956697" elapsed="0.000209"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.791896" elapsed="0.165038"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>${new_user_data}</arg>
+<doc>This keyword sends a POST request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:52.791803" elapsed="0.165195"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.957732" level="INFO">
+201</msg>
+<msg time="2024-08-15T18:10:52.957795" level="INFO">${actual_status_code} = 201</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.957550" elapsed="0.000259"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:52.958023" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.957893" elapsed="0.000174"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.958234" level="INFO">
+"Created"</msg>
+<msg time="2024-08-15T18:10:52.958281" level="INFO">${actual_reason} = Created</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.958143" elapsed="0.000151"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.958372" elapsed="0.000118"/>
+</kw>
+<arg>expected_status_code=201</arg>
+<arg>expected_reason=Created</arg>
+<status status="PASS" start="2024-08-15T18:10:52.957239" elapsed="0.001291"/>
+</kw>
+<kw name="Validate Create New User Response Body" owner="key_users_endpoint">
+<if>
+<branch type="IF" condition="&quot;${full_body}&quot; == &quot;Yes&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959209" elapsed="0.000013"/>
+</kw>
+<kw name="Output" owner="REST">
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959293" elapsed="0.000009"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959387" elapsed="0.000010"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959461" elapsed="0.000159"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959694" elapsed="0.000011"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959768" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959012" elapsed="0.000788"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Job&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959938" elapsed="0.000012"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.960017" elapsed="0.000010"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:52.960090" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:52.959820" elapsed="0.000301"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Name&quot;">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:52.974991" level="INFO">
+"morpheus"</msg>
+<msg time="2024-08-15T18:10:52.975068" level="INFO">${actual_name} = morpheus</msg>
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.960245" elapsed="0.014838"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.975232" elapsed="0.011970"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:52.987313" elapsed="0.000377"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:52.960138" elapsed="0.027576"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:52.958991" elapsed="0.028744"/>
+</if>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_ID_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.987790" elapsed="0.010008"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_CREATEDAT_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:52.997876" elapsed="0.009389"/>
+</kw>
+<arg>user_data=${new_user_data}</arg>
+<arg>full_body=Only Name</arg>
+<doc>This keyword validates the format and the content of the response when creating a new user</doc>
+<status status="PASS" start="2024-08-15T18:10:52.958781" elapsed="0.048528"/>
+</kw>
+<doc>This test creates a new user through the API with a body only with name
+The response should have status code 201 and the reason Created</doc>
+<tag>all-tests</tag>
+<tag>create-user</tag>
+<status status="PASS" start="2024-08-15T18:10:52.790690" elapsed="0.216746"/>
+</test>
+<test id="s1-s1-s1-t3" name="Create A New User Through API Only Job" line="34">
+<kw name="Create New User Body Data" owner="key_data_creation">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.008161" level="INFO">${body_data} = {}</msg>
+<var>${body_data}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.008066" elapsed="0.000107"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${name}&quot; != &quot;${None}&quot;">
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${body_data}</arg>
+<arg>name</arg>
+<arg>${name}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.008314" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.008216" elapsed="0.000123"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.008201" elapsed="0.000152"/>
+</if>
+<if>
+<branch type="IF" condition="&quot;${job}&quot; != &quot;${None}&quot;">
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${body_data}</arg>
+<arg>job</arg>
+<arg>${job}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.008457" elapsed="0.000061"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.008391" elapsed="0.000142"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.008368" elapsed="0.000174"/>
+</if>
+<return>
+<value>${body_data}</value>
+<status status="PASS" start="2024-08-15T18:10:53.008566" elapsed="0.000021"/>
+</return>
+<msg time="2024-08-15T18:10:53.008631" level="INFO">${new_user_data} = {'job': 'leader'}</msg>
+<var>${new_user_data}</var>
+<arg>job=leader</arg>
+<status status="PASS" start="2024-08-15T18:10:53.007898" elapsed="0.000741"/>
+</kw>
+<kw name="Send A POST Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<kw name="POST" owner="REST">
+<arg>${uri}</arg>
+<arg>${body}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a POST request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.008882" elapsed="0.161516"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.008849" elapsed="0.161653"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>POST could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.170781" elapsed="0.000024"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.170592" elapsed="0.000242"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.008835" elapsed="0.162030"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>${new_user_data}</arg>
+<doc>This keyword sends a POST request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.008739" elapsed="0.162191"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.171769" level="INFO">
+201</msg>
+<msg time="2024-08-15T18:10:53.171838" level="INFO">${actual_status_code} = 201</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.171567" elapsed="0.000288"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.172097" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.171956" elapsed="0.000187"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.172344" level="INFO">
+"Created"</msg>
+<msg time="2024-08-15T18:10:53.172399" level="INFO">${actual_reason} = Created</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.172231" elapsed="0.000184"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.172665" elapsed="0.000152"/>
+</kw>
+<arg>expected_status_code=201</arg>
+<arg>expected_reason=Created</arg>
+<status status="PASS" start="2024-08-15T18:10:53.171202" elapsed="0.001667"/>
+</kw>
+<kw name="Validate Create New User Response Body" owner="key_users_endpoint">
+<if>
+<branch type="IF" condition="&quot;${full_body}&quot; == &quot;Yes&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173537" elapsed="0.000015"/>
+</kw>
+<kw name="Output" owner="REST">
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173626" elapsed="0.000010"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173706" elapsed="0.000010"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173777" elapsed="0.000009"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173847" elapsed="0.000011"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173915" elapsed="0.000009"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.173350" elapsed="0.000594"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Job&quot;">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.189357" level="INFO">
+"leader"</msg>
+<msg time="2024-08-15T18:10:53.189440" level="INFO">${actual_job} = leader</msg>
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.174079" elapsed="0.015376"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.189566" elapsed="0.012456"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.202149" elapsed="0.000436"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.173964" elapsed="0.028645"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Name&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.202698" elapsed="0.000009"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.202756" elapsed="0.000007"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.202806" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.202630" elapsed="0.000196"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.173328" elapsed="0.029513"/>
+</if>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_ID_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.202881" elapsed="0.010410"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_CREATEDAT_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.213360" elapsed="0.009103"/>
+</kw>
+<arg>user_data=${new_user_data}</arg>
+<arg>full_body=Only Job</arg>
+<doc>This keyword validates the format and the content of the response when creating a new user</doc>
+<status status="PASS" start="2024-08-15T18:10:53.173125" elapsed="0.049379"/>
+</kw>
+<doc>This test creates a new user through the API with a body only with job
+The response should have status code 201 and the reason Created</doc>
+<tag>all-tests</tag>
+<tag>create-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.007569" elapsed="0.215028"/>
+</test>
+<test id="s1-s1-s1-t4" name="Create A New User Through API No Body" line="44">
+<kw name="Send A POST Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<kw name="POST" owner="REST">
+<arg>${uri}</arg>
+<arg>${body}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a POST request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.223210" elapsed="0.160432"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.223170" elapsed="0.160529"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>POST could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.383850" elapsed="0.000014"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.383752" elapsed="0.000131"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.223154" elapsed="0.160747"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<doc>This keyword sends a POST request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.223024" elapsed="0.160918"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.384504" level="INFO">
+201</msg>
+<msg time="2024-08-15T18:10:53.384552" level="INFO">${actual_status_code} = 201</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.384311" elapsed="0.000254"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.384730" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.384638" elapsed="0.000128"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.384898" level="INFO">
+"Created"</msg>
+<msg time="2024-08-15T18:10:53.384935" level="INFO">${actual_reason} = Created</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.384824" elapsed="0.000121"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.385006" elapsed="0.000092"/>
+</kw>
+<arg>expected_status_code=201</arg>
+<arg>expected_reason=Created</arg>
+<status status="PASS" start="2024-08-15T18:10:53.384088" elapsed="0.001041"/>
+</kw>
+<kw name="Validate Create New User Response Body" owner="key_users_endpoint">
+<if>
+<branch type="IF" condition="&quot;${full_body}&quot; == &quot;Yes&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385652" elapsed="0.000010"/>
+</kw>
+<kw name="Output" owner="REST">
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385717" elapsed="0.000007"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385775" elapsed="0.000007"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385829" elapsed="0.000007"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385883" elapsed="0.000008"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385935" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385530" elapsed="0.000427"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Job&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_job}</var>
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386058" elapsed="0.000009"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_JOB_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386117" elapsed="0.000008"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_job}</arg>
+<arg>${user_data.job}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386171" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.385971" elapsed="0.000223"/>
+</branch>
+<branch type="ELSE IF" condition="&quot;${full_body}&quot; == &quot;Only Name&quot;">
+<kw name="Output" owner="REST">
+<var>${actual_name}</var>
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386286" elapsed="0.000008"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386344" elapsed="0.000007"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_name}</arg>
+<arg>${user_data.name}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386396" elapsed="0.000015"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.386207" elapsed="0.000218"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.385517" elapsed="0.000920"/>
+</if>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_ID_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.386480" elapsed="0.012697"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${CREATE_USER_CREATEDAT_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.399273" elapsed="0.010313"/>
+</kw>
+<doc>This keyword validates the format and the content of the response when creating a new user</doc>
+<status status="PASS" start="2024-08-15T18:10:53.385386" elapsed="0.024244"/>
+</kw>
+<doc>This test creates a new user through the API without a body
+The response should have status code 201 and the reason Created</doc>
+<tag>all-tests</tag>
+<tag>create-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.222696" elapsed="0.187028"/>
+</test>
+<test id="s1-s1-s1-t5" name="Create A New User Through API Invalid Body" line="52">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.410259" level="INFO">${new_user_data} = {</msg>
+<var>${new_user_data}</var>
+<arg>{</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.410172" elapsed="0.000100"/>
+</kw>
+<kw name="Send A POST Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<kw name="POST" owner="REST">
+<msg time="2024-08-15T18:10:53.590079" level="WARN">Response body content is not JSON. Content-Type is: text/html; charset=utf-8</msg>
+<arg>${uri}</arg>
+<arg>${body}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a POST request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.410613" elapsed="0.180372"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.410574" elapsed="0.180513"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>POST could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.591412" elapsed="0.000028"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.591185" elapsed="0.000291"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.410554" elapsed="0.180960"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>${new_user_data}</arg>
+<doc>This keyword sends a POST request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.410431" elapsed="0.181165"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.592520" level="INFO">
+400</msg>
+<msg time="2024-08-15T18:10:53.592602" level="INFO">${actual_status_code} = 400</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.592274" elapsed="0.000350"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.592930" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.592749" elapsed="0.000240"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.593244" level="INFO">
+"Bad Request"</msg>
+<msg time="2024-08-15T18:10:53.593313" level="INFO">${actual_reason} = Bad Request</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.593102" elapsed="0.000229"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.593449" elapsed="0.000175"/>
+</kw>
+<arg>expected_status_code=400</arg>
+<arg>expected_reason=Bad Request</arg>
+<status status="PASS" start="2024-08-15T18:10:53.591863" elapsed="0.001818"/>
+</kw>
+<doc>This test validates that a new user can't be created through the API with a invalid body
+An invalid body has a invalid JSON format
+The response should have status code 400 and the reason Bad Request</doc>
+<tag>all-tests</tag>
+<tag>create-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.409824" elapsed="0.184016"/>
+</test>
+<doc>This file contains the tests for create a new user</doc>
+<status status="PASS" start="2024-08-15T18:10:52.378058" elapsed="1.216505"/>
+</suite>
+<suite id="s1-s1-s2" name="Get User" source="/Users/fernandoangelin/Downloads/pairpoint_qae_challenge-main/tests/users_endpoint/get_user.robot">
+<kw name="Setup Users Endpoint URI" owner="key_users_endpoint" type="SETUP">
+<variable name="${USERS_ENDPOINT_URI}" scope="SUITE">
+<var>${BASE_URL}${USERS_ENDPOINT}</var>
+<status status="PASS" start="2024-08-15T18:10:53.598525" elapsed="0.000140"/>
+</variable>
+<doc>This keyword creates and set the URI for /users endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.598406" elapsed="0.000316"/>
+</kw>
+<test id="s1-s1-s2-t1" name="Get User By Id With A Valid Id" line="18">
+<kw name="Send A GET Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<if>
+<branch type="IF" condition="&quot;${id}&quot; == &quot;${None}&quot;">
+<if>
+<branch type="IF" condition="&quot;${page}&quot; == &quot;${None}&quot;">
+<kw name="GET" owner="REST">
+<arg>${uri}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.599861" elapsed="0.000015"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.599776" elapsed="0.000137"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}?page=${page}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.600000" elapsed="0.000012"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.599935" elapsed="0.000106"/>
+</branch>
+<status status="NOT RUN" start="2024-08-15T18:10:53.599766" elapsed="0.000291"/>
+</if>
+<status status="NOT RUN" start="2024-08-15T18:10:53.599594" elapsed="0.000483"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}/${id}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.600154" elapsed="0.062486"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.600093" elapsed="0.062637"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.599580" elapsed="0.063175"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:53.599545" elapsed="0.063250"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>GET could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.663026" elapsed="0.000015"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.662863" elapsed="0.000199"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.599514" elapsed="0.063568"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>${VALID_ID}</arg>
+<doc>This keyword sends a GET request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.599274" elapsed="0.063856"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.663807" level="INFO">
+200</msg>
+<msg time="2024-08-15T18:10:53.663857" level="INFO">${actual_status_code} = 200</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.663627" elapsed="0.000243"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.664039" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.663937" elapsed="0.000137"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.664207" level="INFO">
+"OK"</msg>
+<msg time="2024-08-15T18:10:53.664245" level="INFO">${actual_reason} = OK</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.664131" elapsed="0.000125"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.664317" elapsed="0.000096"/>
+</kw>
+<arg>expected_status_code=200</arg>
+<arg>expected_reason=OK</arg>
+<status status="PASS" start="2024-08-15T18:10:53.663363" elapsed="0.001084"/>
+</kw>
+<kw name="Validate Get User By Id Response Body" owner="key_users_endpoint">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.664898" level="INFO">
+{
+    "data": {
+        "id": 2,
+        "email": "janet.weaver@reqres.in",
+        "first_name": "Janet",
+        "last_name": "Weaver",
+        "avatar": "https://reqres.in/img/faces/2-image.jpg"
+    },
+    "support": {
+        "url": "https://reqres.in/#support-heading",
+        "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
+}</msg>
+<msg time="2024-08-15T18:10:53.664945" level="INFO">${response} = {'data': {'id': 2, 'email': 'janet.weaver@reqres.in', 'first_name': 'Janet', 'last_name': 'Weaver', 'avatar': 'https://reqres.in/img/faces/2-image.jpg'}, 'support': {'url': 'https://reqres.in/#support...</msg>
+<var>${response}</var>
+<arg>response body</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.664793" elapsed="0.000164"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${response}&quot; != &quot;{}&quot;">
+<kw name="Integer" owner="REST">
+<arg>${GET_USER_BY_ID_ID_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.665192" elapsed="0.012369"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_EMAIL_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.677691" elapsed="0.010751"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_FIRST_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.688556" elapsed="0.009694"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_LAST_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.698316" elapsed="0.008439"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_AVATAR_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.706818" elapsed="0.007995"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_SUPPORT_URL_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.714864" elapsed="0.008011"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_SUPPORT_TEXT_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.722958" elapsed="0.007675"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.665010" elapsed="0.065645"/>
+</branch>
+<branch type="ELSE">
+<kw name="Should Be Empty" owner="BuiltIn">
+<arg>${response}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.730720" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.730672" elapsed="0.000068"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.664995" elapsed="0.065833"/>
+</if>
+<doc>This keyword validates the format of the response when getting a user</doc>
+<status status="PASS" start="2024-08-15T18:10:53.664647" elapsed="0.066212"/>
+</kw>
+<tag>all-tests</tag>
+<tag>get-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.598790" elapsed="0.132170"/>
+</test>
+<test id="s1-s1-s2-t2" name="Get User By Id With An Invalid Id" line="25">
+<kw name="Send A GET Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<if>
+<branch type="IF" condition="&quot;${id}&quot; == &quot;${None}&quot;">
+<if>
+<branch type="IF" condition="&quot;${page}&quot; == &quot;${None}&quot;">
+<kw name="GET" owner="REST">
+<arg>${uri}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.731627" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.731585" elapsed="0.000064"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}?page=${page}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.731686" elapsed="0.000005"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.731658" elapsed="0.000044"/>
+</branch>
+<status status="NOT RUN" start="2024-08-15T18:10:53.731581" elapsed="0.000128"/>
+</if>
+<status status="NOT RUN" start="2024-08-15T18:10:53.731525" elapsed="0.000192"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}/${id}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.731749" elapsed="0.086983"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.731723" elapsed="0.087071"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.731520" elapsed="0.087292"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:53.731507" elapsed="0.087323"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>GET could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.818953" elapsed="0.000013"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.818864" elapsed="0.000119"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.731483" elapsed="0.087516"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>${INVALID_ID}</arg>
+<doc>This keyword sends a GET request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.731359" elapsed="0.087680"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.819482" level="INFO">
+404</msg>
+<msg time="2024-08-15T18:10:53.819522" level="INFO">${actual_status_code} = 404</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.819369" elapsed="0.000164"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.819675" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.819590" elapsed="0.000113"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.819821" level="INFO">
+"Not Found"</msg>
+<msg time="2024-08-15T18:10:53.819854" level="INFO">${actual_reason} = Not Found</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.819754" elapsed="0.000110"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.819917" elapsed="0.000084"/>
+</kw>
+<arg>expected_status_code=404</arg>
+<arg>expected_reason=Not Found</arg>
+<status status="PASS" start="2024-08-15T18:10:53.819179" elapsed="0.000851"/>
+</kw>
+<kw name="Validate Get User By Id Response Body" owner="key_users_endpoint">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.820358" level="INFO">
+{}</msg>
+<msg time="2024-08-15T18:10:53.820393" level="INFO">${response} = {}</msg>
+<var>${response}</var>
+<arg>response body</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.820285" elapsed="0.000117"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${response}&quot; != &quot;{}&quot;">
+<kw name="Integer" owner="REST">
+<arg>${GET_USER_BY_ID_ID_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820558" elapsed="0.000008"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_EMAIL_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820612" elapsed="0.000007"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_FIRST_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820656" elapsed="0.000007"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_LAST_NAME_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820700" elapsed="0.000006"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_AVATAR_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820741" elapsed="0.000006"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_SUPPORT_URL_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820781" elapsed="0.000005"/>
+</kw>
+<kw name="String" owner="REST">
+<arg>${GET_USER_BY_ID_SUPPORT_TEXT_JSONPATH}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON string.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820820" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.820442" elapsed="0.000397"/>
+</branch>
+<branch type="ELSE">
+<kw name="Should Be Empty" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.820947" level="INFO">Length is 0.</msg>
+<arg>${response}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.820890" elapsed="0.000075"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.820852" elapsed="0.000128"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.820432" elapsed="0.000558"/>
+</if>
+<doc>This keyword validates the format of the response when getting a user</doc>
+<status status="PASS" start="2024-08-15T18:10:53.820178" elapsed="0.000834"/>
+</kw>
+<tag>all-tests</tag>
+<tag>get-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.731076" elapsed="0.090005"/>
+</test>
+<test id="s1-s1-s2-t3" name="Get All Users" line="32">
+<kw name="Send A GET Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<if>
+<branch type="IF" condition="&quot;${id}&quot; == &quot;${None}&quot;">
+<if>
+<branch type="IF" condition="&quot;${page}&quot; == &quot;${None}&quot;">
+<kw name="GET" owner="REST">
+<arg>${uri}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.821747" elapsed="0.068817"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.821668" elapsed="0.068954"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}?page=${page}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.890860" elapsed="0.000017"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.890649" elapsed="0.000254"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.821663" elapsed="0.069254"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:53.821602" elapsed="0.069333"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}/${id}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.891005" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.890949" elapsed="0.000088"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.821596" elapsed="0.069454"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:53.821581" elapsed="0.069486"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>GET could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.891178" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.891105" elapsed="0.000103"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.821566" elapsed="0.069664"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<doc>This keyword sends a GET request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.821436" elapsed="0.069847"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.891850" level="INFO">
+200</msg>
+<msg time="2024-08-15T18:10:53.891903" level="INFO">${actual_status_code} = 200</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.891704" elapsed="0.000211"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.892083" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.891982" elapsed="0.000133"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.892269" level="INFO">
+"OK"</msg>
+<msg time="2024-08-15T18:10:53.892309" level="INFO">${actual_reason} = OK</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.892189" elapsed="0.000131"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.892382" elapsed="0.000100"/>
+</kw>
+<arg>expected_status_code=200</arg>
+<arg>expected_reason=OK</arg>
+<status status="PASS" start="2024-08-15T18:10:53.891466" elapsed="0.001050"/>
+</kw>
+<kw name="Validate Get Users Response Body" owner="key_users_endpoint">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.893249" level="INFO">
+{
+    "page": 1,
+    "per_page": 6,
+    "total": 12,
+    "total_pages": 2,
+    "data": [
+        {
+            "id": 1,
+            "email": "george.bluth@reqres.in",
+            "first_name": "George",
+            "last_name": "Bluth",
+            "avatar": "https://reqres.in/img/faces/1-image.jpg"
+        },
+        {
+            "id": 2,
+            "email": "janet.weaver@reqres.in",
+            "first_name": "Janet",
+            "last_name": "Weaver",
+            "avatar": "https://reqres.in/img/faces/2-image.jpg"
+        },
+        {
+            "id": 3,
+            "email": "emma.wong@reqres.in",
+            "first_name": "Emma",
+            "last_name": "Wong",
+            "avatar": "https://reqres.in/img/faces/3-image.jpg"
+        },
+        {
+            "id": 4,
+            "email": "eve.holt@reqres.in",
+            "first_name": "Eve",
+            "last_name": "Holt",
+            "avatar": "https://reqres.in/img/faces/4-image.jpg"
+        },
+        {
+            "id": 5,
+            "email": "charles.morris@reqres.in",
+            "first_name": "Charles",
+            "last_name": "Morris",
+            "avatar": "https://reqres.in/img/faces/5-image.jpg"
+        },
+        {
+            "id": 6,
+            "email": "tracey.ramos@reqres.in",
+            "first_name": "Tracey",
+            "last_name": "Ramos",
+            "avatar": "https://reqres.in/img/faces/6-image.jpg"
+        }
+    ],
+    "support": {
+        "url": "https://reqres.in/#support-heading",
+        "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
+}</msg>
+<msg time="2024-08-15T18:10:53.893322" level="INFO">${response} = {'page': 1, 'per_page': 6, 'total': 12, 'total_pages': 2, 'data': [{'id': 1, 'email': 'george.bluth@reqres.in', 'first_name': 'George', 'last_name': 'Bluth', 'avatar': 'https://reqres.in/img/faces/1-i...</msg>
+<var>${response}</var>
+<arg>response body</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.893107" elapsed="0.000229"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${response}&quot; != &quot;{}&quot;">
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_PAGE}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.893538" elapsed="0.012949"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_PER_PAGE}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.906592" elapsed="0.011404"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_TOTAL}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.918108" elapsed="0.009560"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_TOTAL_PAGES}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.927736" elapsed="0.008736"/>
+</kw>
+<kw name="Array" owner="REST">
+<arg>${GET_USERS_DATA}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON array.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.936541" elapsed="0.009354"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.953755" level="INFO">
+1</msg>
+<msg time="2024-08-15T18:10:53.953797" level="INFO">${users_page} = 1</msg>
+<var>${users_page}</var>
+<arg>${GET_USERS_PAGE}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.945953" elapsed="0.007853"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${page} == ${users_page}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.953860" elapsed="0.000115"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.961399" level="INFO">
+6</msg>
+<msg time="2024-08-15T18:10:53.961432" level="INFO">${users_per_page} = 6</msg>
+<var>${users_per_page}</var>
+<arg>${GET_USERS_PER_PAGE}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.954017" elapsed="0.007424"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:53.980421" level="INFO">
+[
+    {
+        "id": 1,
+        "email": "george.bluth@reqres.in",
+        "first_name": "George",
+        "last_name": "Bluth",
+        "avatar": "https://reqres.in/img/faces/1-image.jpg"
+    },
+    {
+        "id": 2,
+        "email": "janet.weaver@reqres.in",
+        "first_name": "Janet",
+        "last_name": "Weaver",
+        "avatar": "https://reqres.in/img/faces/2-image.jpg"
+    },
+    {
+        "id": 3,
+        "email": "emma.wong@reqres.in",
+        "first_name": "Emma",
+        "last_name": "Wong",
+        "avatar": "https://reqres.in/img/faces/3-image.jpg"
+    },
+    {
+        "id": 4,
+        "email": "eve.holt@reqres.in",
+        "first_name": "Eve",
+        "last_name": "Holt",
+        "avatar": "https://reqres.in/img/faces/4-image.jpg"
+    },
+    {
+        "id": 5,
+        "email": "charles.morris@reqres.in",
+        "first_name": "Charles",
+        "last_name": "Morris",
+        "avatar": "https://reqres.in/img/faces/5-image.jpg"
+    },
+    {
+        "id": 6,
+        "email": "tracey.ramos@reqres.in",
+        "first_name": "Tracey",
+        "last_name": "Ramos",
+        "avatar": "https://reqres.in/img/faces/6-image.jpg"
+    }
+]</msg>
+<msg time="2024-08-15T18:10:53.980557" level="INFO">${users_data} = [{'id': 1, 'email': 'george.bluth@reqres.in', 'first_name': 'George', 'last_name': 'Bluth', 'avatar': 'https://reqres.in/img/faces/1-image.jpg'}, {'id': 2, 'email': 'janet.weaver@reqres.in', 'first_na...</msg>
+<var>${users_data}</var>
+<arg>${GET_USERS_DATA}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.961490" elapsed="0.019077"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2024-08-15T18:10:53.980712" level="INFO">Length is 6.</msg>
+<msg time="2024-08-15T18:10:53.980735" level="INFO">${users_data_size} = 6</msg>
+<var>${users_data_size}</var>
+<arg>${users_data}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.980645" elapsed="0.000096"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${users_data_size} &lt;= ${users_per_page}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-08-15T18:10:53.980779" elapsed="0.000141"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.893385" elapsed="0.087551"/>
+</branch>
+<branch type="ELSE">
+<kw name="Should Be Empty" owner="BuiltIn">
+<arg>${response}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.980999" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.980958" elapsed="0.000057"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.893373" elapsed="0.087649"/>
+</if>
+<doc>This keyword validates the format of the response when getting all users</doc>
+<status status="PASS" start="2024-08-15T18:10:53.892696" elapsed="0.088354"/>
+</kw>
+<tag>all-tests</tag>
+<tag>get-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.821192" elapsed="0.159950"/>
+</test>
+<test id="s1-s1-s2-t4" name="Get All Users From Second Page" line="39">
+<kw name="Send A GET Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<if>
+<branch type="IF" condition="&quot;${id}&quot; == &quot;${None}&quot;">
+<if>
+<branch type="IF" condition="&quot;${page}&quot; == &quot;${None}&quot;">
+<kw name="GET" owner="REST">
+<arg>${uri}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:53.981690" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:53.981637" elapsed="0.000074"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}?page=${page}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:53.981746" elapsed="0.065517"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:53.981720" elapsed="0.065587"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.981633" elapsed="0.065689"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:53.981587" elapsed="0.065749"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}/${id}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.047432" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.047348" elapsed="0.000112"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.981582" elapsed="0.065890"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:53.981570" elapsed="0.065914"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>GET could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.047545" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.047505" elapsed="0.000060"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:53.981557" elapsed="0.066021"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>page=${VALID_PAGE}</arg>
+<doc>This keyword sends a GET request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:53.981438" elapsed="0.066170"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.047991" level="INFO">
+200</msg>
+<msg time="2024-08-15T18:10:54.048027" level="INFO">${actual_status_code} = 200</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.047894" elapsed="0.000142"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:54.048161" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.048086" elapsed="0.000099"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.048291" level="INFO">
+"OK"</msg>
+<msg time="2024-08-15T18:10:54.048320" level="INFO">${actual_reason} = OK</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.048232" elapsed="0.000096"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.048374" elapsed="0.000075"/>
+</kw>
+<arg>expected_status_code=200</arg>
+<arg>expected_reason=OK</arg>
+<status status="PASS" start="2024-08-15T18:10:54.047728" elapsed="0.000745"/>
+</kw>
+<kw name="Validate Get Users Response Body" owner="key_users_endpoint">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.048840" level="INFO">
+{
+    "page": 2,
+    "per_page": 6,
+    "total": 12,
+    "total_pages": 2,
+    "data": [
+        {
+            "id": 7,
+            "email": "michael.lawson@reqres.in",
+            "first_name": "Michael",
+            "last_name": "Lawson",
+            "avatar": "https://reqres.in/img/faces/7-image.jpg"
+        },
+        {
+            "id": 8,
+            "email": "lindsay.ferguson@reqres.in",
+            "first_name": "Lindsay",
+            "last_name": "Ferguson",
+            "avatar": "https://reqres.in/img/faces/8-image.jpg"
+        },
+        {
+            "id": 9,
+            "email": "tobias.funke@reqres.in",
+            "first_name": "Tobias",
+            "last_name": "Funke",
+            "avatar": "https://reqres.in/img/faces/9-image.jpg"
+        },
+        {
+            "id": 10,
+            "email": "byron.fields@reqres.in",
+            "first_name": "Byron",
+            "last_name": "Fields",
+            "avatar": "https://reqres.in/img/faces/10-image.jpg"
+        },
+        {
+            "id": 11,
+            "email": "george.edwards@reqres.in",
+            "first_name": "George",
+            "last_name": "Edwards",
+            "avatar": "https://reqres.in/img/faces/11-image.jpg"
+        },
+        {
+            "id": 12,
+            "email": "rachel.howell@reqres.in",
+            "first_name": "Rachel",
+            "last_name": "Howell",
+            "avatar": "https://reqres.in/img/faces/12-image.jpg"
+        }
+    ],
+    "support": {
+        "url": "https://reqres.in/#support-heading",
+        "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
+}</msg>
+<msg time="2024-08-15T18:10:54.048972" level="INFO">${response} = {'page': 2, 'per_page': 6, 'total': 12, 'total_pages': 2, 'data': [{'id': 7, 'email': 'michael.lawson@reqres.in', 'first_name': 'Michael', 'last_name': 'Lawson', 'avatar': 'https://reqres.in/img/faces...</msg>
+<var>${response}</var>
+<arg>response body</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.048737" elapsed="0.000246"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${response}&quot; != &quot;{}&quot;">
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_PAGE}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.049176" elapsed="0.010148"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_PER_PAGE}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.059401" elapsed="0.009304"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_TOTAL}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.068793" elapsed="0.008426"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_TOTAL_PAGES}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.077287" elapsed="0.007895"/>
+</kw>
+<kw name="Array" owner="REST">
+<arg>${GET_USERS_DATA}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON array.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.085241" elapsed="0.008667"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.101355" level="INFO">
+2</msg>
+<msg time="2024-08-15T18:10:54.101396" level="INFO">${users_page} = 2</msg>
+<var>${users_page}</var>
+<arg>${GET_USERS_PAGE}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.093963" elapsed="0.007441"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${page} == ${users_page}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.101454" elapsed="0.000101"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.109021" level="INFO">
+6</msg>
+<msg time="2024-08-15T18:10:54.109062" level="INFO">${users_per_page} = 6</msg>
+<var>${users_per_page}</var>
+<arg>${GET_USERS_PER_PAGE}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.101600" elapsed="0.007471"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.116747" level="INFO">
+[
+    {
+        "id": 7,
+        "email": "michael.lawson@reqres.in",
+        "first_name": "Michael",
+        "last_name": "Lawson",
+        "avatar": "https://reqres.in/img/faces/7-image.jpg"
+    },
+    {
+        "id": 8,
+        "email": "lindsay.ferguson@reqres.in",
+        "first_name": "Lindsay",
+        "last_name": "Ferguson",
+        "avatar": "https://reqres.in/img/faces/8-image.jpg"
+    },
+    {
+        "id": 9,
+        "email": "tobias.funke@reqres.in",
+        "first_name": "Tobias",
+        "last_name": "Funke",
+        "avatar": "https://reqres.in/img/faces/9-image.jpg"
+    },
+    {
+        "id": 10,
+        "email": "byron.fields@reqres.in",
+        "first_name": "Byron",
+        "last_name": "Fields",
+        "avatar": "https://reqres.in/img/faces/10-image.jpg"
+    },
+    {
+        "id": 11,
+        "email": "george.edwards@reqres.in",
+        "first_name": "George",
+        "last_name": "Edwards",
+        "avatar": "https://reqres.in/img/faces/11-image.jpg"
+    },
+    {
+        "id": 12,
+        "email": "rachel.howell@reqres.in",
+        "first_name": "Rachel",
+        "last_name": "Howell",
+        "avatar": "https://reqres.in/img/faces/12-image.jpg"
+    }
+]</msg>
+<msg time="2024-08-15T18:10:54.116792" level="INFO">${users_data} = [{'id': 7, 'email': 'michael.lawson@reqres.in', 'first_name': 'Michael', 'last_name': 'Lawson', 'avatar': 'https://reqres.in/img/faces/7-image.jpg'}, {'id': 8, 'email': 'lindsay.ferguson@reqres.in', '...</msg>
+<var>${users_data}</var>
+<arg>${GET_USERS_DATA}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.109122" elapsed="0.007679"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2024-08-15T18:10:54.116908" level="INFO">Length is 6.</msg>
+<msg time="2024-08-15T18:10:54.116932" level="INFO">${users_data_size} = 6</msg>
+<var>${users_data_size}</var>
+<arg>${users_data}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.116853" elapsed="0.000085"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${users_data_size} &lt;= ${users_per_page}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.116975" elapsed="0.000085"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:54.049021" elapsed="0.068055"/>
+</branch>
+<branch type="ELSE">
+<kw name="Should Be Empty" owner="BuiltIn">
+<arg>${response}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.117152" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.117102" elapsed="0.000067"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:54.049011" elapsed="0.068168"/>
+</if>
+<arg>page=${VALID_PAGE}</arg>
+<doc>This keyword validates the format of the response when getting all users</doc>
+<status status="PASS" start="2024-08-15T18:10:54.048609" elapsed="0.068606"/>
+</kw>
+<tag>all-tests</tag>
+<tag>get-user</tag>
+<status status="PASS" start="2024-08-15T18:10:53.981219" elapsed="0.136089"/>
+</test>
+<test id="s1-s1-s2-t5" name="Get All Users From A Empty Page" line="46">
+<kw name="Send A GET Request To Specific Endpoint" owner="key_common">
+<try>
+<branch type="TRY">
+<if>
+<branch type="IF" condition="&quot;${id}&quot; == &quot;${None}&quot;">
+<if>
+<branch type="IF" condition="&quot;${page}&quot; == &quot;${None}&quot;">
+<kw name="GET" owner="REST">
+<arg>${uri}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.117883" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.117828" elapsed="0.000077"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}?page=${page}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.118002" elapsed="0.080249"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:54.117974" elapsed="0.080323"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:54.117824" elapsed="0.080488"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:54.117784" elapsed="0.080546"/>
+</branch>
+<branch type="ELSE">
+<kw name="GET" owner="REST">
+<arg>${uri}/${id}</arg>
+<arg>timeout=0.5</arg>
+<tag>http</tag>
+<doc>*Sends a GET request to the endpoint.*</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.198436" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.198343" elapsed="0.000128"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:54.117776" elapsed="0.080704"/>
+</if>
+<status status="PASS" start="2024-08-15T18:10:54.117764" elapsed="0.080729"/>
+</branch>
+<branch type="EXCEPT">
+<kw name="Fail" owner="BuiltIn">
+<arg>GET could not be performed</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.198564" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.198522" elapsed="0.000063"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:54.117747" elapsed="0.080852"/>
+</try>
+<arg>${USERS_ENDPOINT_URI}</arg>
+<arg>page=${EMPTY_PAGE}</arg>
+<doc>This keyword sends a GET request to a specific endpoint</doc>
+<status status="PASS" start="2024-08-15T18:10:54.117629" elapsed="0.081003"/>
+</kw>
+<kw name="Validate Response Info" owner="key_common">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.199026" level="INFO">
+200</msg>
+<msg time="2024-08-15T18:10:54.199063" level="INFO">${actual_status_code} = 200</msg>
+<var>${actual_status_code}</var>
+<arg>response status</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.198925" elapsed="0.000147"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2024-08-15T18:10:54.199202" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${actual_status_code}</arg>
+<arg>${expected_status_code}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.199122" elapsed="0.000105"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.199334" level="INFO">
+"OK"</msg>
+<msg time="2024-08-15T18:10:54.199363" level="INFO">${actual_reason} = OK</msg>
+<var>${actual_reason}</var>
+<arg>response reason</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.199277" elapsed="0.000094"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${actual_reason}</arg>
+<arg>${expected_reason}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.199417" elapsed="0.000073"/>
+</kw>
+<arg>expected_status_code=200</arg>
+<arg>expected_reason=OK</arg>
+<status status="PASS" start="2024-08-15T18:10:54.198758" elapsed="0.000757"/>
+</kw>
+<kw name="Validate Get Users Response Body" owner="key_users_endpoint">
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.199864" level="INFO">
+{
+    "page": 2222,
+    "per_page": 6,
+    "total": 12,
+    "total_pages": 2,
+    "data": [],
+    "support": {
+        "url": "https://reqres.in/#support-heading",
+        "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+    }
+}</msg>
+<msg time="2024-08-15T18:10:54.199900" level="INFO">${response} = {'page': 2222, 'per_page': 6, 'total': 12, 'total_pages': 2, 'data': [], 'support': {'url': 'https://reqres.in/#support-heading', 'text': 'To keep ReqRes free, contributions towards server costs are a...</msg>
+<var>${response}</var>
+<arg>response body</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.199791" elapsed="0.000118"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${response}&quot; != &quot;{}&quot;">
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_PAGE}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.200064" elapsed="0.010940"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_PER_PAGE}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.211112" elapsed="0.010011"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_TOTAL}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.221206" elapsed="0.009259"/>
+</kw>
+<kw name="Integer" owner="REST">
+<arg>${GET_USERS_TOTAL_PAGES}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON integer.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.230559" elapsed="0.008182"/>
+</kw>
+<kw name="Array" owner="REST">
+<arg>${GET_USERS_DATA}</arg>
+<tag>assertions</tag>
+<doc>*Asserts the field as JSON array.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.238797" elapsed="0.007782"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.254305" level="INFO">
+2222</msg>
+<msg time="2024-08-15T18:10:54.254344" level="INFO">${users_page} = 2222</msg>
+<var>${users_page}</var>
+<arg>${GET_USERS_PAGE}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.246636" elapsed="0.007716"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${page} == ${users_page}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.254401" elapsed="0.000104"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.262012" level="INFO">
+6</msg>
+<msg time="2024-08-15T18:10:54.262046" level="INFO">${users_per_page} = 6</msg>
+<var>${users_per_page}</var>
+<arg>${GET_USERS_PER_PAGE}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.254545" elapsed="0.007510"/>
+</kw>
+<kw name="Output" owner="REST">
+<msg time="2024-08-15T18:10:54.269427" level="INFO">
+[]</msg>
+<msg time="2024-08-15T18:10:54.269461" level="INFO">${users_data} = []</msg>
+<var>${users_data}</var>
+<arg>${GET_USERS_DATA}</arg>
+<arg>also_console=false</arg>
+<tag>I/O</tag>
+<doc>*Outputs JSON to terminal or a file.*</doc>
+<status status="PASS" start="2024-08-15T18:10:54.262103" elapsed="0.007367"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2024-08-15T18:10:54.269573" level="INFO">Length is 0.</msg>
+<msg time="2024-08-15T18:10:54.269596" level="INFO">${users_data_size} = 0</msg>
+<var>${users_data_size}</var>
+<arg>${users_data}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.269522" elapsed="0.000081"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${users_data_size} &lt;= ${users_per_page}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2024-08-15T18:10:54.269641" elapsed="0.000088"/>
+</kw>
+<status status="PASS" start="2024-08-15T18:10:54.199945" elapsed="0.069799"/>
+</branch>
+<branch type="ELSE">
+<kw name="Should Be Empty" owner="BuiltIn">
+<arg>${response}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="NOT RUN" start="2024-08-15T18:10:54.269806" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2024-08-15T18:10:54.269765" elapsed="0.000057"/>
+</branch>
+<status status="PASS" start="2024-08-15T18:10:54.199935" elapsed="0.069895"/>
+</if>
+<arg>page=${EMPTY_PAGE}</arg>
+<doc>This keyword validates the format of the response when getting all users</doc>
+<status status="PASS" start="2024-08-15T18:10:54.199649" elapsed="0.070208"/>
+</kw>
+<tag>all-tests</tag>
+<tag>get-user</tag>
+<status status="PASS" start="2024-08-15T18:10:54.117402" elapsed="0.152597"/>
+</test>
+<doc>This file contains the tests for create a new user</doc>
+<status status="PASS" start="2024-08-15T18:10:53.595143" elapsed="0.675021"/>
+</suite>
+<status status="PASS" start="2024-08-15T18:10:52.377697" elapsed="1.892723"/>
+</suite>
+<status status="PASS" start="2024-08-15T18:10:52.367274" elapsed="1.903315"/>
+</suite>
+<statistics>
+<total>
+<stat pass="10" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="10" fail="0" skip="0">all-tests</stat>
+<stat pass="5" fail="0" skip="0">create-user</stat>
+<stat pass="5" fail="0" skip="0">get-user</stat>
+</tag>
+<suite>
+<stat pass="10" fail="0" skip="0" id="s1" name="Tests">Tests</stat>
+<stat pass="10" fail="0" skip="0" id="s1-s1" name="Users Endpoint">Tests.Users Endpoint</stat>
+<stat pass="5" fail="0" skip="0" id="s1-s1-s1" name="Create New User">Tests.Users Endpoint.Create New User</stat>
+<stat pass="5" fail="0" skip="0" id="s1-s1-s2" name="Get User">Tests.Users Endpoint.Get User</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-08-15T18:10:53.590079" level="WARN">Response body content is not JSON. Content-Type is: text/html; charset=utf-8</msg>
+</errors>
+</robot>
