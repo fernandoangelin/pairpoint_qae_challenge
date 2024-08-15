@@ -1,2 +1,3 @@
 RESTinstance==1.4.4
 robotframework==7.0.1
+robotframework-pabot==2.18.0
