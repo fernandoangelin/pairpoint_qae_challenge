@@ -162,9 +162,9 @@ cython_debug/
 #.idea/
 
 # Robot Framework run evidence and pabot results
-./log.html
-./output.xml
-./report.html
+log.html
+output.xml
+report.html
 .pabotsuitenames
 pabot_results
 .DS_Store
